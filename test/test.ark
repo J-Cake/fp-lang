@@ -1,2 +1,2 @@
 fn main(args)
-    args.(1 + 2)
+    args.(1 + 1)

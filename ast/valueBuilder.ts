@@ -49,11 +49,15 @@ const builders: Builders = {
             else
                 params[a] = valueBuilder(i);
 
-        return {
-            value: valueBuilder(expr.slice(0, -1)),
-            argList: params,
-            type: 'Call'
-        };
+        try { // only pass if the `value` is actually valid
+            return {
+                value: valueBuilder(expr.slice(0, -1)),
+                argList: params,
+                type: 'Call'
+            };
+        } catch (err) {
+            return null
+        }
     },
     Operation(expr: ParenthesisedExpression): Types.Operation {
         if (!expr.some(i => isToken(i, ['Operator'])))
@@ -70,9 +74,13 @@ const builders: Builders = {
         if (!expr.some(i => isToken(i, ['.'])))
             return null;
 
+        const chain = split(expr, '.');
+        if (chain.some(i => i.length === 0))
+            return null;
+
         return ({
             type: 'Chain',
-            value: split(expr, '.').map(i => valueBuilder(i))
+            value: chain.map(i => valueBuilder(i))
         });
     },
     Lambda(expr: ParenthesisedExpression): Types.Lambda {
@@ -109,8 +117,6 @@ const getToken = (f, t: ParenthesisedExpression, index: number = 0): LexToken =>
 
 export default function valueBuilder(expression: ParenthesisedExpression): Value {
 
-    // console.log(expression, util.inspect(split(expression, '.'), false, null, true));
-
     if (expression.length === 1 && isToken(expression[0], ['Name', 'string', 'boolean', 'binary', 'octal', 'decimal', 'hexadecimal', 'floating', 'scientific']))
         return expression[0];
     else if (expression.length === 1 && Array.isArray(expression[0]))
@@ -125,6 +131,5 @@ export default function valueBuilder(expression: ParenthesisedExpression): Value
     if (keys.length > 0)
         return attempts[_.reduce(keys, (a, i) => ConstructTypes[a] > ConstructTypes[i] ? a : i, keys[0]) as keyof Builders]
 
-    console.error(`SyntaxError: Unexpected token ${U(getToken, expression, 0)?.src ?? '<unknown>'}`);
-    throw ``;
+    throw `SyntaxError: Unexpected token ${U(getToken, expression, 0)?.src ?? '<unknown>'}`;
 }

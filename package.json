@@ -4,16 +4,17 @@
     "main": "./build/cli.js",
     "type": "module",
     "scripts": {
-        "build:compiler": "echo Remove NodeJS Dependency! ; esbuild ./compiler/index.ts --outfile=./build/compiler.js --bundle --sourcemap",
-        "build:cli": "echo Remove NodeJS Dependency! ; esbuild ./cli/index.ts --outfile=./build/cli.js --bundle --sourcemap --platform=node --format=esm"
+        "build:compiler": "esbuild ./ast/index.ts --outfile=./build/compiler.js --bundle --sourcemap",
+        "build:cli": "esbuild ./cli/index.ts --outfile=./build/cli.js --bundle --sourcemap --platform=node --format=esm"
     },
     "dependencies": {
-      "lodash": "latest"
+        "lodash": "latest",
+        "pnpm": "^6.20.4"
     },
-  "devDependencies": {
-      "@types/node": "latest",
-      "@types/lodash": "latest",
-      "esbuild": "latest",
-      "typescript": "latest"
-  }
+    "devDependencies": {
+        "@types/lodash": "latest",
+        "@types/node": "latest",
+        "esbuild": "latest",
+        "typescript": "latest"
+    }
 }

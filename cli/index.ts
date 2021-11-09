@@ -1,7 +1,7 @@
 import fs from 'fs';
 import util from 'util';
 
-import Compiler from '../compiler/index';
+import Compiler from '../ast/index';
 import {parseArgs} from "./args";
 
 const args = parseArgs(process.argv.slice(2));
