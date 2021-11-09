@@ -1,0 +1,19 @@
+{
+    "name": "fp-lang",
+    "version": "1.0.0",
+    "main": "./build/cli.js",
+    "type": "module",
+    "scripts": {
+        "build:compiler": "echo Remove NodeJS Dependency! ; esbuild ./compiler/index.ts --outfile=./build/compiler.js --bundle --sourcemap",
+        "build:cli": "echo Remove NodeJS Dependency! ; esbuild ./cli/index.ts --outfile=./build/cli.js --bundle --sourcemap --platform=node --format=esm"
+    },
+    "dependencies": {
+      "lodash": "latest"
+    },
+  "devDependencies": {
+      "@types/node": "latest",
+      "@types/lodash": "latest",
+      "esbuild": "latest",
+      "typescript": "latest"
+  }
+}
