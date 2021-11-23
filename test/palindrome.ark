@@ -1,0 +1,5 @@
+import "string" => str
+import "io" => io
+
+fn main(args)
+    args.add(i => str(i).lower().alphabetic().all((i, a, str) => str[a] == str.(-a))).each(i => io.out_ln(i.0, i.1))

@@ -1,0 +1,10 @@
+{
+    "name": "compiler",
+    "main": "./compiler",
+    "dependencies": {
+        "lodash": "latest"
+    },
+    "devDependencies": {
+        "@types/lodash": "latest"
+    }
+}

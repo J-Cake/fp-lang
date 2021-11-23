@@ -1,0 +1,9 @@
+import "args"
+
+fn main(args)
+    args::Parser(args::Config {
+        default: args::path(),
+        options: args::Options {
+            key: "value"
+        }
+    }).parse(args)

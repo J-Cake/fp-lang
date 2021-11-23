@@ -21,8 +21,12 @@ export function split(tokens: ParenthesisedExpression, delimiter: TokenType, kee
     if (tokens.length <= 0)
         return [];
 
+    let bcount: number = 0;
+
     return _.reduce(tokens, function (groups: ParenthesisedExpression[], token: LexToken): ParenthesisedExpression[] {
-        if (token.type === delimiter)
+        bcount += isToken(token, ['OpenBracket']) ? 1 : isToken(token, ['CloseBracket']) ? -1 : 0;
+
+        if (token.type === delimiter && bcount === 0)
             return groups.concat([keep ? [token] : []]);
         else
             return groups.slice(0, -1).concat([groups[groups.length - 1].concat([token])]);

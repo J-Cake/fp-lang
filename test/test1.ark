@@ -1,0 +1,4 @@
+import "io" => io
+
+fn main(args): int
+    io.out_ln(1 + 1)

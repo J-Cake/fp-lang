@@ -1,0 +1,13 @@
+# using example https://github.com/J-Cake/bezier-curve-playground/blob/master/src/Scripts/BezierCurve.ts
+# assume `U` is already defined. assume `range` => [T extends number](min: T, max: T, resolution: float) => List[T]
+
+type Point: obj { x: int, y: int }
+
+fn inter(a: Point, b: Point, alpha: float): Point
+    Point {
+        x: a.x + (b.x - a.x) * alpha,
+        y: a.y + (b.y - a.y) * alpha
+    }
+
+fn main(args)
+    range(0, 1, 10).map(alpha => U((f, points) => points.len > 1 and f(f, points.slice(1).map((i, a) => inter(i, points.(a), alpha) )) or points ), points)[0])

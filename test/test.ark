@@ -1,2 +1,5 @@
 fn main(args)
-    args.(1 + 1)
+    parse(args)
+
+fn parse(args)
+    args

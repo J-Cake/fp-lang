@@ -3,13 +3,17 @@
         "module": "esnext",
         "target": "esnext",
         "moduleResolution": "Node",
+        "lib": ["ESNext"],
         "sourceMap": true,
         "allowSyntheticDefaultImports": true,
         "esModuleInterop": true,
-        "rootDirs": ["./ast"],
-        "outDir": "./build",
+        "rootDirs": [
+            "./parse"
+        ],
+        "outDir": "./build/ts",
         "declaration": true,
-        "resolveJsonModule": true
+        "resolveJsonModule": true,
+        "noEmit": true
     },
     "exclude": [
         "node_modules"

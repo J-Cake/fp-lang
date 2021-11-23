@@ -1,15 +1,18 @@
 {
     "name": "fp-lang",
     "version": "1.0.0",
-    "main": "./build/cli.js",
+    "main": "./index.js",
     "type": "module",
     "scripts": {
-        "build:compiler": "esbuild ./ast/index.ts --outfile=./build/compiler.js --bundle --sourcemap",
-        "build:cli": "esbuild ./cli/index.ts --outfile=./build/cli.js --bundle --sourcemap --platform=node --format=esm"
+        "build:compiler": "esbuild ./compiler/index.ts --outfile=./build/index.js --bundle --sourcemap --format=esm --platform=neutral",
+        "build:cli": "esbuild ./cli/index.ts --outfile=./build/cli.js --bundle --sourcemap --platform=node --format=esm --external:compiler",
+
+        "build:clean": "rm -r ./build",
+        "build:all": "make compiler"
     },
     "dependencies": {
         "lodash": "latest",
-        "pnpm": "^6.20.4"
+        "compiler": "link:./build/"
     },
     "devDependencies": {
         "@types/lodash": "latest",

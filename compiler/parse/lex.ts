@@ -1,4 +1,5 @@
 import _ from "lodash";
+import {isToken} from "./util";
 
 export const operators: Record<string, readonly [source: string, precedence: number, left: boolean]> = {
     add: ['+', 1, false],
@@ -11,9 +12,14 @@ export const operators: Record<string, readonly [source: string, precedence: num
     or: ['or', 0, false],
     xor: ['xor', 0, false],
     not: ['not', 0, true],
+
+    intersect: ['intersect', 0, false],
+    union: ['union', 0, false],
+    omit: ['omit', 0, false]
 } as const;
 export const keywords: readonly string[] = [
     "fn",
+    "import",
     "type",
     "const",
     "return"
@@ -32,6 +38,7 @@ enum TokenTypes {
     '.',
     ',',
     ':',
+    '::',
     '...',
 
     string,
@@ -65,11 +72,12 @@ const matchers: Record<TokenType, string | readonly string[] | RegExp | ((token:
     CloseBracket: [')', ']', '}', '>'],
     Operator: token => _.some(operators, i => i[0] === token),
     Lambda: '=>',
-    Comment: token => token.startsWith('#') && !token.includes('\n'),
+    Comment: token => token.startsWith('#') && !token.includes('\n') && !token.slice(1).includes("#"),
     Whitespace: /^\s+$/,
     '.': '.',
     ',': ',',
     ':': ':',
+    '::': '::',
     '...': '...',
     string: token => token.startsWith('"') && token.endsWith('"') && !token.slice(1, -1).includes('"'),
     boolean: ['true', 'false'],
@@ -131,5 +139,5 @@ export default function Lex(input: string, origin: string): LexToken[] {
         }
     }
 
-    return tokens;
+    return tokens.filter(i => !isToken(i, ['Comment']));
 }
